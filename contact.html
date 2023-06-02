@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Us</title>
+  <link rel="icon" href="mu.webp">
+  <style>
+    /* Your CSS styles */
+       body{
+         background-color: #212529;
+       }
+
+      .form-container {
+        color: white;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .form-group input[type="text"],
+      .form-group input[type="email"],
+      .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .form-group input[type="checkbox"] {
+        margin-right: 5px;
+      }
+
+      .form-group button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .form-group button:hover {
+        background-color: #45a049;
+      }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <form id="contact-form">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="idno">ID Number:</label>
+        <input type="text" id="idno" name="idno" required>
+      </div>
+      <div class="form-group">
+        <label for="college-email">College Email:</label>
+        <input type="email" id="college-email" name="college-email" required>
+      </div>
+      <div class="form-group">
+        <label>Checkboxes:</label>
+        <input type="checkbox" id="participation" name="participation">
+        <label for="participation">Participation</label>
+        <input type="checkbox" id="organizing-team" name="organizing-team">
+        <label for="organizing-team">Organizing Team</label>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Include the Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+  <script>
+    // Initialize Firebase
+    var firebaseConfig = {
+      apiKey: "AIzaSyAzD51H6NxnGSzGP1nKhF5tUXcxiVPht_k",
+      authDomain: "eventive-5c992.firebaseapp.com",
+      projectId: "eventive-5c992",
+      // Add other Firebase configuration details
+    };
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+
+    // Handle contact form submission
+    var contactForm = document.getElementById('contact-form');
+    contactForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      var name = document.getElementById('name').value;
+      var idno = document.getElementById('idno').value;
+      var collegeEmail = document.getElementById('college-email').value;
+      var participationCheckbox = document.getElementById('participation');
+      var organizingTeamCheckbox = document.getElementById('organizing-team');
+      var description = document.getElementById('description').value;
+
+      // Create contact object
+      var contact = {
+        name: name,
+        idno: idno,
+        collegeEmail: collegeEmail,
+        participation: participationCheckbox.checked,
+        organizingTeam: organizingTeamCheckbox.checked,
+        description: description
+      };
+
+      // Store contact data in Firestore
+      db.collection('contacts').add(contact)
+        .then(function(docRef) {
+          console.log('Contact data stored successfully. Document ID:', docRef.id);
+          // Optionally, display a success message or redirect to a thank-you page
+        })
+        .catch(function(error) {
+          console.error('Error storing contact data:', error);
+          // Optionally, display an error message to the user
+        });
+    });
+  </script>
+</body>
+</html>

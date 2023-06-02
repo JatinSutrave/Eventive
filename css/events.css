@@ -1,0 +1,33 @@
+body {
+  background-color:  #212529;
+}
+
+.event-container {
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.event-container:nth-child(1) {
+  margin-bottom: 20px;
+}
+
+.event {
+  width: 200px;
+  margin: 10px;
+  text-align: center;
+}
+
+.event img {
+  width: 100%;
+  height: auto;
+}
+
+h3 {
+  margin-top: 10px;
+}
+
+.event:hover {
+  cursor: pointer;
+  background-color: lightgray;
+}
